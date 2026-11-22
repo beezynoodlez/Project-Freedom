@@ -10,3 +10,7 @@ func _physics_process(delta):
 	if parent.ground and parent.movement.y >= 0:
 		parent.movement.x = 0
 		parent.set_state(parent.STATES.NORMAL)
+
+
+func _on_screen_check_property_list_changed() -> void:
+	pass # Replace with function body.

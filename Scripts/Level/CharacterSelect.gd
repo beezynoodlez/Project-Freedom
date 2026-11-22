@@ -33,12 +33,18 @@ func _ready():
 	Global.music.stream = music
 	Global.music.play()
 	$UI/Labels/Control/Character.text = characterLabels[characterID]
+	_update_character_origin()
+	get_viewport().size_changed.connect(_update_character_origin)
 
 	for child in $UI/Labels/CharacterOrigin.get_children():
 		if child is Node2D or child is Sprite2D:
 			characterSprites.append(child)
 	assert(characterLabels.size() == characterSprites.size())
 	assert(characterLabels.size() == CHARACTER_ID.size())
+
+func _update_character_origin():
+	var viewSize = get_viewport().get_visible_rect().size
+	$UI/Labels/CharacterOrigin.position = Vector2(viewSize.x * 0.5, viewSize.y * 0.5 - 15.0)
 
 func _input(event):
 	

@@ -17,6 +17,10 @@ var wasPaused = false
 # determines if the current scene can pause
 var sceneCanPause = false
 
+# window aspect ratio lock state
+var _last_window_size: Vector2i = Vector2i.ZERO
+var _enforcing_aspect: bool = false
+
 func _ready():
 	# global object references
 	Global.musicParent = get_node_or_null("Music")
@@ -29,6 +33,43 @@ func _ready():
 	reset_game_values()
 	# Warning prevention.
 	scene_faded.connect(_on_scene_faded)
+	# Lock windowed resizing to the viewport's aspect ratio
+	var window = get_window()
+	var base_w = int(ProjectSettings.get_setting("display/window/size/viewport_width", 426))
+	var base_h = int(ProjectSettings.get_setting("display/window/size/viewport_height", 240))
+	window.min_size = Vector2i(base_w, base_h)
+	_last_window_size = window.size
+	window.size_changed.connect(_on_window_size_changed)
+
+func _on_window_size_changed():
+	if _enforcing_aspect:
+		return
+	var window = get_window()
+	if window.mode != Window.MODE_WINDOWED:
+		_last_window_size = window.size
+		return
+	var current_size = window.size
+	var base_w = float(ProjectSettings.get_setting("display/window/size/viewport_width", 426))
+	var base_h = float(ProjectSettings.get_setting("display/window/size/viewport_height", 240))
+	var target_aspect = base_w / base_h
+	var dw = absf(current_size.x - _last_window_size.x)
+	var dh = absf(current_size.y - _last_window_size.y)
+	var target_size: Vector2i
+	if dw >= dh:
+		var new_w = maxi(int(base_w), current_size.x)
+		var new_h = maxi(int(base_h), roundi(new_w / target_aspect))
+		target_size = Vector2i(new_w, new_h)
+	else:
+		var new_h = maxi(int(base_h), current_size.y)
+		var new_w = maxi(int(base_w), roundi(new_h * target_aspect))
+		target_size = Vector2i(new_w, new_h)
+	if abs(current_size.x - target_size.x) > 1 or abs(current_size.y - target_size.y) > 1:
+		_enforcing_aspect = true
+		window.size = target_size
+		_last_window_size = target_size
+		_enforcing_aspect = false
+	else:
+		_last_window_size = current_size
 
 func _process(delta):
 	# verify scene isn't paused

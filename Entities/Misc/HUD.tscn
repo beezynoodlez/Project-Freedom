@@ -146,14 +146,14 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("Banner:position")
+tracks/5/path = NodePath("Banner:offset_top")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
 "times": PackedFloat32Array(0, 1, 2),
 "transitions": PackedFloat32Array(1, 2, 1),
 "update": 0,
-"values": [Vector2(67, 0), Vector2(67, 0), Vector2(67, -203)]
+"values": [0.0, 0.0, -203.0]
 }
 
 [sub_resource type="Animation" id="2"]
@@ -173,14 +173,14 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Banner:position")
+tracks/1/path = NodePath("Banner:offset_top")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(65.5, -203)]
+"values": [-203.0]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -441,14 +441,14 @@ tracks/11/keys = {
 tracks/12/type = "value"
 tracks/12/imported = false
 tracks/12/enabled = true
-tracks/12/path = NodePath("Banner:position")
+tracks/12/path = NodePath("Banner:offset_top")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
 "times": PackedFloat32Array(0, 0.5, 1.5),
 "transitions": PackedFloat32Array(1, 0.5, 1),
 "update": 0,
-"values": [Vector2(67, -203), Vector2(67, -203), Vector2(67, 0)]
+"values": [-203.0, -203.0, 0.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fgko3"]
@@ -830,7 +830,7 @@ layout_mode = 1
 anchors_preset = -1
 offset_left = -32.0
 offset_right = 32.0
-offset_bottom = 256.0
+offset_bottom = 384.0
 grow_vertical = 2
 texture = ExtResource("10_xpi0a")
 stretch_mode = 1
@@ -859,7 +859,7 @@ anchor_bottom = 0.003
 offset_left = -32.0
 offset_top = -12.352
 offset_right = 4832.0
-offset_bottom = 243.648
+offset_bottom = 384.0
 grow_horizontal = 0
 grow_vertical = 2
 texture = ExtResource("10_xpi0a")
@@ -880,10 +880,17 @@ autoplay = "Start"
 
 [node name="LevelClear" type="Control" parent="."]
 process_mode = 1
+visible = false
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -112.0
+offset_right = 160.0
+offset_bottom = 112.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 2

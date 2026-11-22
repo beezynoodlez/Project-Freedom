@@ -41,3 +41,7 @@ func _physics_process(delta):
 	# Gravity
 	if !parent.ground:
 		parent.movement.y += parent.grv/GlobalFunctions.div_by_delta(delta)
+
+
+func _on_screen_check_property_list_changed() -> void:
+	pass # Replace with function body.
